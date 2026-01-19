@@ -1,4 +1,5 @@
 struct SegmentTree {
+public:
   ll n;
   vector<ll> data, datb;
   SegmentTree(int _n) {
@@ -7,6 +8,13 @@ struct SegmentTree {
     data.assign(2 * n, 0);
     datb.assign(2 * n, 0);
   }
+  void add(ll a, ll b, ll x) {
+    add(a, b, x, 0, 0, n);
+  }
+  ll sum(ll a, ll b) {
+    return sum(a, b, 0, 0, n);
+  }
+private:
   void add(ll a, ll b, ll x, ll k, ll l, ll r) {
     if (a <= l && r <= b) {
       data[k] += x;
