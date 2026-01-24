@@ -39,6 +39,8 @@ using vl = vc<ll>; using vvl = vv<ll>; using vvvl = vv<vl>; using vvvvl = vv<vvl
 using vs = vc<string>; using vvs = vv<string>;
 template<class T> using pq = priority_queue<T, vector<T>>;//降順
 template<class T> using pq_g = priority_queue<T, vector<T>, greater<T>>;//昇順
+template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
+template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 //const ll dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 //bool out_grid(const ll i, const ll j, const ll h, const ll w) {return(!(0 <= i && i < h && 0 <= j && j < w));}
 void solve() {
