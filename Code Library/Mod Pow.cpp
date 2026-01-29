@@ -1,4 +1,4 @@
-long long mod_pow_safe(long long a, long long b, long long n) {
+long long mod_pow(long long a, long long b, long long n) {
     __int128_t res = 1;
     __int128_t base = a % n;
     while (b > 0) {
