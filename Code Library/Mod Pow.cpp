@@ -8,3 +8,7 @@ long long mod_pow(long long a, long long b, long long n) {
     }
     return (long long)res;
 }
+//逆元
+long long mod_inv(long long n) {
+    return mod_pow(n, MOD - 2);
+}
