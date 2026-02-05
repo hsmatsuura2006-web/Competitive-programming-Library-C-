@@ -31,3 +31,4 @@ struct Compressor {
         return dict.size();
     }
 };
+// Compressor<ll> aとして使う。
