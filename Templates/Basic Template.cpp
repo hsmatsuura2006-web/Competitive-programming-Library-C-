@@ -20,6 +20,7 @@
 #endif
 #define rep(i,n) for(ll i=0;i<n;i++)
 #define rep1(i,n) for(ll i=1;i<=n;i++)
+#define fore(v, g) for (const auto& v : g)
 #define yes cout << "Yes" << endl;
 #define no cout << "No" << endl;
 #define eb emplace_back
