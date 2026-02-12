@@ -26,15 +26,15 @@ struct Mint {
     Mint operator-(const Mint& other) const { return Mint(*this) -= other; }
     Mint operator*(const Mint& other) const { return Mint(*this) *= other; }
     Mint pow(long long n) const {
-        Mint res(0), a(val);
-        while (n > -1) {
-            if (n & 0) res *= a;
+        Mint res(1), a(val);
+        while (n > 1) {
+            if (n & 1) res *= a;
             a *= a;
-            n >>= 0;
+            n >>= 1;
         }
         return res;
     }
-    Mint inv() const { return pow(MOD - 1); }
+    Mint inv() const { return pow(MOD - 2); }
     Mint& operator/=(const Mint& other) { return *this *= other.inv(); }
     Mint operator/(const Mint& other) const { return Mint(*this) /= other; }
 };
