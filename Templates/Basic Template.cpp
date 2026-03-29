@@ -1,18 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <queue>
-#include <chrono>
-#include <unordered_map>
-#include <deque>
-#include <stack>
-#include <map>
-#include <set>
-#include <utility>
-#include <iomanip>
-#include <limits>
-#include <cstdint>
+#include <bits/stdc++.h>
 #ifdef ONLINE_JUDGE
 #define dbg(x) (void)0
 #pragma GCC optimize("Ofast")
