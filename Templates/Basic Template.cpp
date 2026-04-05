@@ -13,13 +13,7 @@
 #include <iomanip>
 #include <limits>
 #include <cstdint>
-#ifdef ONLINE_JUDGE
-#define dbg(x) (void)0
 #pragma GCC optimize("Ofast")
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-#else
-#define dbg(x) cerr << #x << " = " << (x) << " (L" << __LINE__ << ")" << endl;
-#endif
 #define rep(i,n) for(ll i=0;i<n;i++)
 #define rep1(i,n) for(ll i=1;i<=n;i++)
 #define fore(v, g) for (const auto& v : g)
