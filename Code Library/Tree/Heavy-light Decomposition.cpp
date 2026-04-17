@@ -56,6 +56,7 @@ public:
     }
 
     // パスを [l, r) の区間リストとして返す
+    // edge = trueにすると、辺に重みがあるとき、falseだと頂点に重みがあるとき
     vector<pair<int, int>> get_path_intervals(int u, int v, bool edge = false) const {
         vector<pair<int, int>> res;
         while (head[u] != head[v]) {
