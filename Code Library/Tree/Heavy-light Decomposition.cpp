@@ -4,13 +4,13 @@
 
 using namespace std;
 
-class FlatHLD {
+class HLD {
 public:
     int n;
     vector<int> head, parent, depth, in, out, sz, rev;
     vector<vector<int>> adj;
 
-    FlatHLD(int n) : n(n), head(n), parent(n, -1), depth(n, 0), 
+    HLD(int n) : n(n), head(n), parent(n, -1), depth(n, 0), 
                      in(n), out(n), sz(n, 1), rev(n), adj(n) {}
 
     void add_edge(int u, int v) {
