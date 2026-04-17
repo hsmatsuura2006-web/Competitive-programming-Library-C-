@@ -1,11 +1,3 @@
-#include <vector>
-#include <algorithm>
-#include <set>
-
-/**
- * @brief 強連結成分分解 (SCC)
- * @details Kosaraju's Algorithm を使用。計算量: O(V + E)
- */
 struct SCC {
     int n;
     std::vector<std::vector<int>> adj;     // 元のグラフ
