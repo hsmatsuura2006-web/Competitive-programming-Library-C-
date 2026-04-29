@@ -1,6 +1,3 @@
-#include <vector>
-#include <algorithm>
-
 template <typename T>
 struct Compressor {
     std::vector<T> dict;
