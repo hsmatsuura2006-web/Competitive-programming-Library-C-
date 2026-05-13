@@ -3,7 +3,7 @@ struct SegmentTree {
 public:
     int n;
     std::vector<T> data, datb;
-
+    SegmentTree() : n(0) {}
     SegmentTree(int _n) {
         n = 1;
         while (n < _n) n <<= 1;
