@@ -4,7 +4,7 @@ struct SegmentTree {
     vector<T> tree;
     T e() { return 0; }
     T op(T a, T b) { return a + b; }
-
+    SegmentTree() : n(0) {}
     SegmentTree(int _n) {
         n = 1;
         while (n < _n) n <<= 1;
