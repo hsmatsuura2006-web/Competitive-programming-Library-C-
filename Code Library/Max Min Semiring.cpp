@@ -25,6 +25,15 @@ struct MaxPlus {
     static T one() { return 0; }     // 加算（mul）の単位元（0）
 };
 
+struct MinPlus {
+    using T = long long;
+    static constexpr T INF = 1e18; // 十分に小さな値（-INFの代わり）
+    
+    static T add(T a, T b) { return std::max(a, b); }
+    static T mul(T a, T b) { return (a == INF || b == INF) ? INF : a + b; }
+    static T zero() { return INF; } // maxの単位元（-INF）
+    static T one() { return 0; }     // 加算（mul）の単位元（0）
+};
 // --- 2. 汎用行列クラス ---
 template <typename Semiring>
 struct Matrix {
