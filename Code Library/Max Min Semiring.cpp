@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cassert>
 
+//代数学的に行列累乗をmax, minにも適応できるようにしたやつ
+
 // --- 1. 演算の定義（半環 / Semiring の構造） ---
 // 通常の「+」と「×」（Mod 1000000007）
 struct NormalMod {
