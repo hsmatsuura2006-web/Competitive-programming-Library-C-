@@ -53,6 +53,25 @@ struct custom_hash {
         return splitmix64(x + FIXED_RANDOM);
     }
 };
+template<typename T>
+istream& operator>>(istream& is, vector<T>& v) {
+    for (auto& x : v) is >> x;
+    return is;
+}
+
+template<typename T, typename U>
+istream& operator>>(istream& is, pair<T, U>& p) {
+    is >> p.first >> p.second;
+    return is;
+}
+
+template<typename T>
+ostream& operator<<(ostream& os, const vector<T>& v) {
+    for (size_t i = 0; i < v.size(); ++i) {
+        os << v[i] << (i + 1 == v.size() ? "" : " ");
+    }
+    return os;
+}
 const ll dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 bool out_grid(const ll i, const ll j, const ll h, const ll w) {return(!(0 <= i && i < h && 0 <= j && j < w));}
 const ll INF = 1e18;
