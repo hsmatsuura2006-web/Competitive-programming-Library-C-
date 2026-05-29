@@ -72,6 +72,24 @@ ostream& operator<<(ostream& os, const vector<T>& v) {
     }
     return os;
 }
+istream& operator>>(istream& is, i128& v) {
+    string s; is >> s;
+    v = 0; bool neg = false;
+    for (char c : s) {
+        if (c == '-') neg = true;
+        else v = v * 10 + (c - '0');
+    }
+    if (neg) v *= -1;
+    return is;
+}
+ostream& operator<<(ostream& os, i128 v) {
+    if (v == 0) return os << "0";
+    if (v < 0) { os << "-"; v *= -1; }
+    string s;
+    while (v > 0) { s += (char)('0' + (v % 10)); v /= 10; }
+    reverse(all(s));
+    return os << s;
+}
 const ll dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 bool out_grid(const ll i, const ll j, const ll h, const ll w) {return(!(0 <= i && i < h && 0 <= j && j < w));}
 const ll INF = 1e18;
