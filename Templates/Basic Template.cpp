@@ -24,6 +24,9 @@
 #define eb emplace_back
 #define em emplace
 #define pb pop_back
+#define all(x) (x).begin(), (x).end()
+#define rall(x) (x).rbegin(), (x).rend()
+#define sz(x) ((ll)(x).size())
 
 using namespace std;
 using ll = long long;
