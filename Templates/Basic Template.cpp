@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <limits>
 #include <cstdint>
+#include <bit>
 
 #pragma GCC optimize("Ofast")
 
