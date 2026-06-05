@@ -18,7 +18,7 @@
 #pragma GCC optimize("Ofast")
 
 #define rep(i, n) for (ll i = 0; i < (ll)(n); ++i)
-#define rep3(i, m, n) for (ll i = (ll)(m); i < (ll)(n); ++i)
+#define reps(i, m, n) for (ll i = (ll)(m); i < (ll)(n); ++i)
 #define fore(v, g) for (const auto& v : g)
 #define yes cout << "Yes" << "\n"
 #define no cout << "No" << "\n"
