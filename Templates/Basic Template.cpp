@@ -54,6 +54,11 @@ template<class T> using pq_g = priority_queue<T, vector<T>, greater<T>>; // æ˜‡é
 template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 
+template<typename T, typename... Ts>
+bool is_any_of(T val, Ts... vals) {
+    return ((val == vals) || ...);
+}
+
 #ifdef LOCAL
 #define debug(x) cerr << __LINE__ << ": " << #x << " = " << x << endl
 #else
