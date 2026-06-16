@@ -15,7 +15,8 @@
 #include <cstdint>
 #include <bit>
 
-#pragma GCC optimize("Ofast")
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 
 #define rep(i, n) for (ll i = 0; i < (ll)(n); ++i)
 #define reps(i, m, n) for (ll i = (ll)(m); i < (ll)(n); ++i)
@@ -53,11 +54,11 @@ template<class T> using pq_g = priority_queue<T, vector<T>, greater<T>>; // æ˜‡é
 
 template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
-
 template<typename T, typename... Ts>
 bool is_any_of(T val, Ts... vals) {
     return ((val == vals) || ...);
 }
+inline ll popcount(ll x) { return __builtin_popcountll(x); }
 
 #ifdef LOCAL
 #define debug(x) cerr << __LINE__ << ": " << #x << " = " << x << endl
@@ -94,6 +95,18 @@ template<typename T>
 ostream& operator<<(ostream& os, const vector<vector<T>>& v) {
     for (size_t i = 0; i < v.size(); ++i) os << v[i] << (i + 1 == v.size() ? "" : "\n");
     return os;
+}
+ostream& operator<<(ostream& os, lll v) {
+    if (v < 0) { os << '-'; v = -v; }
+    if (v > 9) os << (lll)(v / 10);
+    return os << (char)('0' + v % 10);
+}
+istream& operator>>(istream& is, lll& v) {
+    string s; is >> s;
+    v = 0; bool neg = (s[0] == '-');
+    for (char c : s) if (c != '-') v = v * 10 + (c - '0');
+    if (neg) v = -v;
+    return is;
 }
 
 const ll dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
