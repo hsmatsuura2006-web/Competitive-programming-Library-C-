@@ -15,6 +15,9 @@
 #include <cstdint>
 #include <bit>
 
+#define _USE_MATH_DEFINES //M_PI
+#include <cmath>
+
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 
