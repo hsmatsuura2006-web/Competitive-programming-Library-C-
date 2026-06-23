@@ -64,9 +64,11 @@ bool is_any_of(T val, Ts... vals) {
 inline ll popcount(ll x) { return __builtin_popcountll(x); }
 
 #ifdef LOCAL
-#define debug(x) cerr << __LINE__ << ": " << #x << " = " << x << endl
+#define debug(...) [&]{ cerr << __LINE__ << " [" << #__VA_ARGS__ << "]: "; \
+    auto _dbg = [](auto x){ cerr << x; }; \
+    ((_dbg(__VA_ARGS__)), ...); cerr << endl; }()
 #else
-#define debug(x) void(0)
+#define debug(...) void(0)
 #endif
 
 struct custom_hash {
