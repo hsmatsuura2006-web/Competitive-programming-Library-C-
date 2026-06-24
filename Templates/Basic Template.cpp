@@ -113,7 +113,22 @@ istream& operator>>(istream& is, lll& v) {
     if (neg) v = -v;
     return is;
 }
-
+// 常に数直線の下方向に丸める除算 (floor)
+template<typename T>
+T floor_div(T n, T d) {
+    T res = n / d;
+    T rem = n % d;
+    if (rem != 0 && ((n < 0) ^ (d < 0))) res--;
+    return res;
+}
+// 常に数直線の上方向に丸める除算 (ceil)
+template<typename T>
+T ceil_div(T n, T d) {
+    T res = n / d;
+    T rem = n % d;
+    if (rem != 0 && !((n < 0) ^ (d < 0))) res++;
+    return res;
+}
 const ll dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 const ll dx8[8] = {1, 1, 0, -1, -1, -1, 0, 1}, dy8[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 bool out_grid(const ll i, const ll j, const ll h, const ll w) { return (!(0 <= i && i < h && 0 <= j && j < w)); }
