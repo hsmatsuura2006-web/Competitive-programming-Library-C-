@@ -138,13 +138,13 @@ const ll MOD1 = 1000000007;
 void solve();
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout << fixed << setprecision(15);
-    ll T = 1;
-    // cin >> T;
-    while (T--) { solve(); }
-    return 0;
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << fixed << setprecision(15);
+  ll T = 1;
+  // cin >> T;
+  while (T--) { solve(); }
+  return 0;
 }
 
 void solve() {
