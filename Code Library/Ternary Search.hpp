@@ -1,75 +1,115 @@
-// example.cpp
-// ternary_search.hpp の使用例
+// ternary_search.hpp
+//
+// 単峰性(unimodal)関数に対する三分探索ライブラリ
+//   - 実数区間版: 下に凸/上に凸な連続関数の最小値・最大値を与える x を探索
+//   - 整数区間版: 下に凸/上に凸な離散関数の最小値・最大値を与える整数 x を探索
+//
+// 使い方は example.cpp を参照してください。
+//
+// ライセンス: パブリックドメイン相当(自由に改変・利用してください)
 
-#include <iostream>
+#ifndef TERNARY_SEARCH_HPP
+#define TERNARY_SEARCH_HPP
+
+#include <type_traits>
 #include <cmath>
-#include <vector>
-#include "ternary_search.hpp"
+#include <cstdint>
+#include <algorithm>
+#include <limits>
 
-int main() {
-    // -----------------------------------------------------
-    // 1) 実数版: 下に凸な関数の最小値
-    //    f(x) = (x - 3)^2 + 5  の最小値は x = 3 のとき 5
-    // -----------------------------------------------------
-    {
-        auto f = [](double x) { return (x - 3.0) * (x - 3.0) + 5.0; };
-        double x = tsearch::minimize(f, -100.0, 100.0);
-        std::cout << "[実数/最小] x = " << x
-                  << ", f(x) = " << f(x) << " (期待値: x=3, f=5)\n";
+namespace tsearch {
+
+// ============================================================
+// 実数区間に対する三分探索 (連続な単峰関数)
+// ============================================================
+
+// 下に凸な関数 f の [lo, hi] における最小値を与える x を返す。
+//   f  : T -> 比較可能な値 を返す呼び出し可能オブジェクト(関数, ラムダ等)
+//   eps: 探索を打ち切る区間幅の許容誤差
+//   iter: 反復回数の上限(eps に達する前に打ち切る安全弁)
+template <typename F, typename T>
+T minimize(F f, T lo, T hi, T eps = static_cast<T>(1e-9), int iter = 200) {
+    static_assert(std::is_floating_point<T>::value,
+                  "T must be a floating point type");
+    for (int i = 0; i < iter && (hi - lo) > eps; ++i) {
+        T m1 = lo + (hi - lo) / 3;
+        T m2 = hi - (hi - lo) / 3;
+        if (f(m1) < f(m2)) {
+            hi = m2;
+        } else {
+            lo = m1;
+        }
     }
-
-    // -----------------------------------------------------
-    // 2) 実数版: 上に凸な関数の最大値
-    //    f(x) = -x^2 + 4x + 1 = -(x-2)^2 + 5  の最大値は x = 2 のとき 5
-    // -----------------------------------------------------
-    {
-        auto f = [](double x) { return -x * x + 4.0 * x + 1.0; };
-        double x = tsearch::maximize(f, -50.0, 50.0);
-        std::cout << "[実数/最大] x = " << x
-                  << ", f(x) = " << f(x) << " (期待値: x=2, f=5)\n";
-    }
-
-    // -----------------------------------------------------
-    // 3) 実数版: 2点間の距離の和を最小化するような幾何的な例
-    //    地点 A(0,0), B(10, 4) から、x軸上の点 P(x,0) までの
-    //    距離の和 |PA| + |PB'| (B'は仮想的に別の高さにある点) が
-    //    最小になる x を求める、という典型的な使い方のイメージ。
-    //    ここでは単純に f(x) = sqrt(x^2+1) + sqrt((10-x)^2+4) を最小化。
-    // -----------------------------------------------------
-    {
-        auto f = [](double x) {
-            return std::sqrt(x * x + 1.0) +
-                   std::sqrt((10.0 - x) * (10.0 - x) + 4.0);
-        };
-        double x = tsearch::minimize(f, 0.0, 10.0, 1e-12);
-        std::cout << "[実数/最小・幾何] x = " << x << ", f(x) = " << f(x) << "\n";
-    }
-
-    // -----------------------------------------------------
-    // 4) 整数版: 下に凸な離散関数の最小値
-    //    f(x) = (x - 7)^2  の最小値は x = 7 のとき 0
-    // -----------------------------------------------------
-    {
-        auto f = [](long long x) { return (x - 7) * (x - 7); };
-        long long x = tsearch::minimize_int(f, -1000LL, 1000LL);
-        std::cout << "[整数/最小] x = " << x
-                  << ", f(x) = " << f(x) << " (期待値: x=7, f=0)\n";
-    }
-
-    // -----------------------------------------------------
-    // 5) 整数版: 上に凸な離散関数の最大値
-    //    配列の要素数などに依存する典型例:
-    //    ある個数 k 個買うときの満足度 f(k) が上に凸な場合の最適な k
-    // -----------------------------------------------------
-    {
-        auto f = [](long long k) {
-            // 例: 満足度 = 10*k - k^2  (k=5 で最大値25)
-            return 10 * k - k * k;
-        };
-        long long k = tsearch::maximize_int(f, 0LL, 20LL);
-        std::cout << "[整数/最大] k = " << k
-                  << ", f(k) = " << f(k) << " (期待値: k=5, f=25)\n";
-    }
-
-    return 0;
+    return (lo + hi) / 2;
 }
+
+// 上に凸な関数 f の [lo, hi] における最大値を与える x を返す。
+template <typename F, typename T>
+T maximize(F f, T lo, T hi, T eps = static_cast<T>(1e-9), int iter = 200) {
+    static_assert(std::is_floating_point<T>::value,
+                  "T must be a floating point type");
+    auto neg_f = [&f](T x) { return -f(x); };
+    return minimize<decltype(neg_f), T>(neg_f, lo, hi, eps, iter);
+}
+
+// 反復回数を固定して打ち切りたい場合の版(eps を使わない)。
+// 誤差 <= (hi-lo) * (2/3)^iter 程度に収束する。
+template <typename F, typename T>
+T minimize_fixed_iter(F f, T lo, T hi, int iter = 100) {
+    static_assert(std::is_floating_point<T>::value,
+                  "T must be a floating point type");
+    for (int i = 0; i < iter; ++i) {
+        T m1 = lo + (hi - lo) / 3;
+        T m2 = hi - (hi - lo) / 3;
+        if (f(m1) < f(m2)) {
+            hi = m2;
+        } else {
+            lo = m1;
+        }
+    }
+    return (lo + hi) / 2;
+}
+
+template <typename F, typename T>
+T maximize_fixed_iter(F f, T lo, T hi, int iter = 100) {
+    static_assert(std::is_floating_point<T>::value,
+                  "T must be a floating point type");
+    auto neg_f = [&f](T x) { return -f(x); };
+    return minimize_fixed_iter<decltype(neg_f), T>(neg_f, lo, hi, iter);
+}
+
+// ============================================================
+// 整数区間に対する三分探索 (離散な単峰関数)
+// ============================================================
+//
+// f(lo), f(lo+1), ..., f(hi) が「狭義単調減少 → 狭義単調増加」
+// (下に凸)、あるいは同値が連続するだけの緩い凸性を持つ場合に対応。
+// 最後に残った小区間(高々数点)は線形探索で確定させるため厳密に正しい。
+
+template <typename F>
+long long minimize_int(F f, long long lo, long long hi) {
+    while (hi - lo > 2) {
+        long long m1 = lo + (hi - lo) / 3;
+        long long m2 = hi - (hi - lo) / 3;
+        if (f(m1) <= f(m2)) {
+            hi = m2;
+        } else {
+            lo = m1;
+        }
+    }
+    long long best = lo;
+    for (long long x = lo + 1; x <= hi; ++x) {
+        if (f(x) < f(best)) best = x;
+    }
+    return best;
+}
+
+template <typename F>
+long long maximize_int(F f, long long lo, long long hi) {
+    auto neg_f = [&f](long long x) { return -f(x); };
+    return minimize_int<decltype(neg_f)>(neg_f, lo, hi);
+}
+
+} // namespace tsearch
+
+#endif // TERNARY_SEARCH_HPP
