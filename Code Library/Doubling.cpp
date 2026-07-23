@@ -78,3 +78,23 @@ int main() {
     while (T--) {solve();}
     return 0;
 }
+// 10進数文字列を 2進数の bit 列 (下位 bit が先頭) に変換
+//もしkがとてつもなくと大きければこれを使えばいい
+vector<int> to_binary(string s) {
+  vector<int> bits;
+  while (!s.empty() && s != "0") {
+    int rem = 0;
+    string next_s = "";
+    for (char c : s) {
+      int cur = rem * 10 + (c - '0');
+      int q = cur / 2;
+      rem = cur % 2;
+      if (!next_s.empty() || q > 0) {
+        next_s += (char)('0' + q);
+      }
+    }
+    bits.push_back(rem);
+    s = next_s;
+  }
+  return bits;
+}
