@@ -56,7 +56,7 @@ int main() {
     string S = "abracadabra";
     uint64_t base = generate_base();
     
-    StaticRollingHash srh(S, base);
+    RollingHash srh(S, base);
     
     // "bra" のハッシュ (区間 [1, 4))
     uint64_t hash_bra1 = srh.get(1, 4);
