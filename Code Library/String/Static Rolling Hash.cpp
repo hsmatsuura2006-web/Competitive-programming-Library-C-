@@ -20,7 +20,7 @@ struct RollingHash {
     }
 
     // コンストラクタ: 前計算を O(N) で行う
-    StaticRollingHash(const string& s, uint64_t base) : base(base) {
+    RollingHash(const string& s, uint64_t base) : base(base) {
         int n = s.size();
         hash.assign(n + 1, 0);
         power.assign(n + 1, 1);
@@ -48,7 +48,7 @@ struct RollingHash {
 uint64_t generate_base() {
     random_device rd;
     mt19937_64 eng(rd());
-    uniform_int_distribution<uint64_t> rand(2, StaticRollingHash::mod - 2);
+    uniform_int_distribution<uint64_t> rand(2, RollingHash::mod - 2);
     return rand(eng);
 }
 
