@@ -239,28 +239,22 @@ namespace dbgutil {
   };
 
   template<typename T>
-  struct is_stack : std::false_type {
-  };
+  struct is_stack : std::false_type {};
 
-  template<typename T, typename C>
-  struct is_stack<std::stack<T, C> > : std::true_type {
-  };
+  template<typename... Args>
+  struct is_stack<std::stack<Args...>> : std::true_type {};
 
   template<typename T>
-  struct is_queue : std::false_type {
-  };
+  struct is_queue : std::false_type {};
 
-  template<typename T, typename C>
-  struct is_queue<std::queue<T, C> > : std::true_type {
-  };
+  template<typename... Args>
+  struct is_queue<std::queue<Args...>> : std::true_type {};
 
   template<typename T>
-  struct is_priority_queue : std::false_type {
-  };
+  struct is_priority_queue : std::false_type {};
 
-  template<typename T, typename C, typename Cmp>
-  struct is_priority_queue<std::priority_queue<T, C, Cmp> > : std::true_type {
-  };
+  template<typename... Args>
+  struct is_priority_queue<std::priority_queue<Args...>> : std::true_type {};
 
   template<typename T>
   constexpr bool is_int128_v = std::is_same_v<std::decay_t<T>, __int128> ||
